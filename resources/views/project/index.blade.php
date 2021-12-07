@@ -24,9 +24,9 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             @can('admin')
-                            <div class="float-right">
+                            <div class="float-left">
                                 <a href="{{ route('project.add') }}" class="btn btn-success" title='Tambah Project'><i
-                                        class="fa fa-plus"></i></a>
+                                        class="fa fa-plus"></i> Tambah Project</a>
                             </div>
                             @endcan
                         </div>

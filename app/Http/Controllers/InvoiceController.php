@@ -19,12 +19,7 @@ class InvoiceController extends Controller
 {
     public function index(Request $request)
     {       
-        if($request->isMethod('POST')){
-            $invoice = Invoice::filter(request(['filter_project','filter_status', 'filter_begin_date', 'filter_last_date']))->get();
-        }else{
-            $invoice = Invoice::all();
-        }
-
+        $invoice = Invoice::all();
         $project = Project::all();
         $data = [
             'isInvoice'=>'active',

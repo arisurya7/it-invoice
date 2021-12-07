@@ -26,7 +26,7 @@
                             @can('admin')
                             <div class="float-left">
                                 <a href="{{ route('users.add') }}" class="btn btn-success" title='Tambah Project'><i
-                                        class="fa fa-plus"></i> Add User</a>
+                                        class="fa fa-plus"></i> Tambah User</a>
                             </div>
                             @endcan
                         </div>

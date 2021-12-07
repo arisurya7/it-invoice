@@ -24,8 +24,8 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             @can('admin')
-                                <div class="float-right">
-                                    <a href="{{ route('invoice.add') }}" class="btn btn-success" title='Tambah invoice'><i class="fa fa-plus"></i></a>
+                                <div class="float-left">
+                                    <a href="{{ route('invoice.add') }}" class="btn btn-success" title='Tambah invoice'><i class="fa fa-plus"></i> Tambah Invoice</a>
                                 </div>    
                             @endcan
                         </div>
@@ -50,52 +50,6 @@
                     </div>
                     @endif
                     
-                    <h4>Filter</h4>
-                    <form action="{{ route('invoice') }}", method="POST">
-                        @csrf
-                        <div class="row mb-3 align-items-end">
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="filter_project" class="text-sm"> Project</label>
-                                    <select name="filter_project" id="filter_project" class="form-control select2 filter">
-                                        <option value="">All Project</option>
-                                        @foreach ($project as $item)
-                                        <option value="{{$item->id}}"   {{ request('filter_project')==$item->id?'selected':'' }} >{{$item->nama_project}} - {{$item->nama_perusahaan}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="filter_status" class="text-sm"> Status</label>
-                                    <select name="filter_status" id="filter_status" class="form-control select2 filter">
-                                        <option value="">All Status</option>
-                                        <option value="Draft" {{ request('filter_status')=='Draft'?'selected':'' }} >Draft</option>
-                                        <option value="Final" {{ request('filter_status')=='Final'?'selected':'' }}>Final</option>
-                                        <option value="Cancel" {{ request('filter_status')=='Cancel'?'selected':'' }}>Cancel</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="filter_begin_date" class="text-sm"> Awal Tanggal</label>
-                                    <input type="date" name="filter_begin_date" id="filter_begin_date" class="form-control filter" value="{{ request('filter_begin_date')}}">
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="filter_last_date" class="text-sm"> Akhir Tanggal</label>
-                                    <input type="date" name="filter_last_date" id="filter_last_date" class="form-control filter" value="{{ request('filter_last_date') }}">
-                                </div>
-                            </div>  
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-outline-primary mb-3">Check</button>
-                            </div>
-                            
-                        </div>
-                    </form>
-                   
-
                     <div class="table-responsive">
                         <table id="tableinvoice" class="table table-bordered dt-responsive nowrap datatable" style="width: 100%;">
                             <thead>

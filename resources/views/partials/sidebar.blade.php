@@ -53,16 +53,24 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('invoice') }}" class="nav-link {{ $isInvoice ?? ''}}">
-              <i class="nav-icon fas fa-file-alt"></i>
+              <i class="nav-icon fas fa-file-invoice"></i>
               <p>
                 Invoice
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('report') }}" class="nav-link {{ $isReport ?? ''}}">
+              <i class="nav-icon fas fa-print"></i>
+              <p>
+                Report
               </p>
             </a>
           </li>
           @can('admin')
           <li class="nav-item">
             <a href="{{ route('users') }}" class="nav-link {{ $isUsers ?? ''}}">
-              <i class="nav-icon fas fa-file-alt"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Users
               </p>

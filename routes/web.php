@@ -12,45 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Login
 Route::get('/login', 'LoginController@index')->name('login')->middleware('guest');
 Route::post('/login/authenticate', 'LoginController@authenticate')->name('login.authenticate');
 Route::get('/forgotpassword','ForgotPasswordController@index')->name('forgotpassword');
 Route::post('/forgotpassword/validatepassword','ForgotPasswordController@validatepassword')->name('forgotpassword.validatepassword');
 Route::get('/resetpassword/{token}','ForgotPasswordController@resetpassword')->name('resetpassword');
 Route::post('/resetpassword/{token}','ForgotPasswordController@updatepassword')->name('updatepassword');
-
-// $match = ['GET', 'POST'];
-// Route::get('/logout', 'LoginController@logout')->name('logout'); 
-// Route::match($match,'/', 'DashboardController@index')->name('dashboard')->middleware('auth');
-// //Project
-// Route::get('/project', 'ProjectController@index')->name('project');
-// Route::match($match, '/project/add', 'ProjectController@add')->name('project.add');
-// Route::match($match, '/project/edit/{id}', 'ProjectController@edit')->name('project.edit');
-// Route::post('/project/delete', 'ProjectController@delete')->name('project.delete');
-
-// // Invoice  
-// Route::match($match,'/invoice', 'InvoiceController@index')->name('invoice');
-// Route::match($match, '/invoice/add', 'InvoiceController@add')->name('invoice.add');
-// Route::match($match, '/invoice/edit/{id}', 'InvoiceController@edit')->name('invoice.edit');
-// Route::get('/invoice/status', 'InvoiceController@status')->name('invoice.status');
-// Route::post('/invoice/delete', 'InvoiceController@delete')->name('invoice.delete');
-// Route::match($match, '/invoice/revisi/{id}', 'InvoiceController@revisi')->name('invoice.revisi');
-// Route::get('/invoice/exportpdf/{id}', 'InvoiceController@exportpdf')->name('invoice.exportpdf');
-
-// // AJAX
-// //Dashboard
-// Route::get('/showstatus', 'DashboardController@showStatus')->name('showstatus');
-
-// // Project
-// Route::get('/project/getkota', 'ProjectController@getKota')->name('project.getkota');
-// Route::get('/project/getkecamatan', 'ProjectController@getKecamatan')->name('project.getkecamatan');
-// Route::get('/project/getkodepos', 'ProjectController@getKodepos')->name('project.getkodepos');
-// Route::get('/project/show', 'ProjectController@show')->name('project.show');
-
-// //Invoice
-// Route::get('/invoice/show', 'InvoiceController@show')->name('invoice.show');
-// Route::get('/invoice/showRevisi', 'InvoiceController@showRevisi')->name('invoice.showrevisi');
-// Route::get('/invoice/getDetailProject', 'InvoiceController@getDetailProject')->name('invoice.getdetailproject');
 
 
 Route::middleware(['auth', 'checkrole:Admin,Manager'])->group(function () {
@@ -69,7 +38,9 @@ Route::middleware(['auth', 'checkrole:Admin,Manager'])->group(function () {
     Route::get('/invoice/show', 'InvoiceController@show')->name('invoice.show');
     Route::get('/invoice/showRevisi', 'InvoiceController@showRevisi')->name('invoice.showrevisi');
     Route::get('/invoice/getDetailProject', 'InvoiceController@getDetailProject')->name('invoice.getdetailproject');
-    
+    //Report
+    Route::match(['get', 'post'], '/report', 'ReportController@index')->name('report');
+    Route::post('/report/printpdf', 'ReportController@printpdf')->name('report.printpdf');
 });
 
 Route::middleware(['checkrole:Admin'])->group(function () {
