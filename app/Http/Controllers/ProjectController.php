@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Deskripsi;
+use App\Models\DetailRevisi;
+use App\Models\Invoice;
 use App\Models\Project;
+use App\Models\Revisi;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -113,8 +117,32 @@ class ProjectController extends Controller
     }
 
     public function delete(Request $request){
-        Project::find($request->id_project)->delete();
-        return redirect()->route('project')->with(['success'=>'Data Customer berhasil dihapus!']);
+        $idInvoices = Invoice::where('project_id', $request->id_project)->get('id');
+        if(count($idInvoices)==0){
+            Project::find($request->id_project)->delete();
+            return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
+        }else{
+            $idRevisis = Array();
+            $revisis = Revisi::all();
+            foreach($idInvoices as $invoice){ 
+                foreach($revisis as $revisi){
+                    if($invoice->id == $revisi->invoice_id){
+                        array_push($idRevisis,$revisi->id);   
+                        Revisi::where('id',$revisi->id)->delete();
+                    }                       
+                }
+                Invoice::where('id', $invoice->id)->delete();
+                Deskripsi::where('invoice_id',$invoice->id)->delete();
+            }
+
+            foreach($idRevisis as $d){
+                DetailRevisi::where('revisi_id', $d)->delete();
+            }
+
+            Project::find($request->id_project)->delete();
+            return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
+        }
+
     }
 
 }

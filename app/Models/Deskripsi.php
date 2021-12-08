@@ -8,6 +8,6 @@ class Deskripsi extends Model
 {
     //
     public function invoice(){
-        return $this->belongsTo('App\Models\Invoice');
+        return $this->belongsTo('App\Models\Invoice','invoice_id');
     }
 }

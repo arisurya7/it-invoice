@@ -10,13 +10,17 @@ class Invoice extends Model
         return $this->hasMany('App\Models\Deskripsi');
     }
 
+    public function revisi(){
+        return $this->hasMany('App\Models\Revisi');
+    }
+
     public function revisiCount($id){
         $count = Revisi::where('invoice_id', $id)->count();
         return $count;
     }
 
     public function project(){
-        return $this->belongsTo('App\Models\Project');
+        return $this->belongsTo('App\Models\Project','project_id');
     }
 
     public function scopeFilter($query, array $filters){

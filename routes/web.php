@@ -58,9 +58,6 @@ Route::middleware(['checkrole:Admin'])->group(function () {
     Route::match(['get', 'post'], '/project/add', 'ProjectController@add')->name('project.add');
     Route::match(['get', 'post'], '/project/edit/{id}', 'ProjectController@edit')->name('project.edit');
     Route::post('/project/delete', 'ProjectController@delete')->name('project.delete');
-    Route::get('/project/getkota', 'ProjectController@getKota')->name('project.getkota');
-    Route::get('/project/getkecamatan', 'ProjectController@getKecamatan')->name('project.getkecamatan');
-    Route::get('/project/getkodepos', 'ProjectController@getKodepos')->name('project.getkodepos');
     //Invoice
     Route::match(['get', 'post'], '/invoice/add', 'InvoiceController@add')->name('invoice.add');
     Route::match(['get', 'post'], '/invoice/edit/{id}', 'InvoiceController@edit')->name('invoice.edit');

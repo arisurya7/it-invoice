@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Revisi extends Model
 {
-    public function deskripsi(){
-        return $this->hasMany('App\Models\DetailRevisi');
+    public function detailrevisi(){
+        return $this->hasMany('App\Models\DetailRevisi','id');
+    }
+
+    public function invoice(){
+        return $this->belongsTo('App\Models\Invoice','invoice_id');
     }
 }

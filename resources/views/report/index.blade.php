@@ -51,7 +51,7 @@
                                         @foreach ($project as $item)
                                         <option value="{{$item->id}}"
                                             {{ request('filter_project')==$item->id?'selected':'' }}>
-                                            {{$item->nama_project}} - {{$item->nama_perusahaan}}</option>
+                                            {{$item->nama_project}} - {{$item->customer->nama_customer}}</option>
                                         @endforeach
                                     </select>
                                 </div>

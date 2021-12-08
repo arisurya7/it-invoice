@@ -86,7 +86,7 @@
                 <tr>
                     <td>Customer</td>
                     <td> : </td>
-                    <td>{{ $filter['customer'][0]->nama_perusahaan?? 'All Customer' }}</td>
+                    <td>{{ $filter['customer'][0]->nama_customer?? 'All Customer' }}</td>
                 </tr>
             </table>
         </div>
@@ -131,7 +131,7 @@
                         <td>{{ $key+1 }}</td>
                         <td>{{$item->nomor_invoice}}</td>
                         <td>{{$item->project->nama_project}}</td>
-                        <td>{{$item->project->nama_perusahaan}}</td>
+                        <td>{{$item->project->customer->nama_customer}}</td>
                         <td>{{date('d-m-Y',strtotime($item->tanggal))}}</td>
                         <td>{{$item->perihal}}</td>
                         <td>{{$item->status}}</td>

@@ -15,10 +15,9 @@ class CreateRevisisTable extends Migration
     {
         Schema::create('revisis', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id');
+            $table->foreignId('invoice_id');
             $table->date('tanggal');
             $table->string('nomor_invoice')->nullable();
-            $table->string('project_id');
             $table->text('perihal');
             $table->integer('total');
             $table->string('termin');

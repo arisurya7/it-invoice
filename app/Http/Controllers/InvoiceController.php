@@ -19,12 +19,10 @@ class InvoiceController extends Controller
 {
     public function index(Request $request)
     {       
-        $invoice = Invoice::all();
-        $project = Project::all();
+        $invoice = Invoice::with(['project'])->get();
         $data = [
             'isInvoice'=>'active',
             'invoice'=>$invoice,
-            'project'=>$project,
         ];
         return view('invoice.index', $data);
     }
@@ -118,7 +116,7 @@ class InvoiceController extends Controller
             }
             return redirect()->route('invoice')->with(['success'=>'Invoice berhasil disimpan']);
         }
-        $project = Project::orderBy('nama_project')->get();
+        $project = Project::with(['customer'])->orderBy('nama_project')->get();
         $data = [
             'title'=>'Tambah Invoice',
             'isInvoice'=>'active',
@@ -130,7 +128,7 @@ class InvoiceController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::with(['deskripsi'])->find($id);
         if ($request->isMethod('POST')){
             $rules = [
                 'project'=>'required',
@@ -203,7 +201,6 @@ class InvoiceController extends Controller
                 $revisi = new Revisi();
                 $revisi->invoice_id = $old->id;
                 $revisi->nomor_invoice = $old->nomor_invoice;
-                $revisi->project_id = $old->project_id;
                 $revisi->tanggal = $old->tanggal;
                 $revisi->perihal = $old->perihal;
                 $revisi->metode_pembayaran = $old->metode_pembayaran;
@@ -216,11 +213,11 @@ class InvoiceController extends Controller
                 $revisi->status = $old->status;
                 $revisi->save();
 
-                foreach($old->deskripsi as $key=>$item){
+                foreach($post['deskripsi'] as $key=>$item){
                     $detail = new DetailRevisi();
                     $detail->revisi_id = $revisi->id;
-                    $detail->deskripsi = $item->deskripsi;
-                    $detail->ammount = $item->ammount;
+                    $detail->deskripsi = $item;
+                    $detail->ammount = $post['ammount'][$key];
                     $detail->save();
                 }
 
@@ -230,15 +227,8 @@ class InvoiceController extends Controller
         }
         
         $project = Project::orderBy('nama_project')->get();
-        $projectedit = Invoice::find($id)->project;
-        $provinsi = Provinsi::find($projectedit->provinsi);
-        $kota = Kota::find($projectedit->kota);
-        $kecamatan = Kecamatan::find($projectedit->kecamatan);
-        $kodepos = KodePos::find($projectedit->kodepos);
-        $projectedit->provinsi = $provinsi->nama;
-        $projectedit->kota = $kota->nama;
-        $projectedit->kecamatan = $kecamatan->nama;
-        $projectedit->kodepos = $kodepos->kode;
+        $projectedit = Invoice::with(['project.customer.kodepos.provinsi', 'project.customer.kodepos.kota', 'project.customer.kodepos.kecamatan'])->find($id)->project;
+
         $data = [
             'title'=>'Revisi Invoice',
             'isInvoice'=>'active',
@@ -259,18 +249,10 @@ class InvoiceController extends Controller
 
     public function revisi(Request $request)
     {
-        $revisi = Revisi::find($request->id);
+        $revisi = Revisi::with(['detailrevisi','invoice.project.customer'])->find($request->id);
         $project = Project::orderBy('nama_project')->get();
-        $projectedit = Project::find($revisi->project_id);
-        $provinsi = Provinsi::find($projectedit->provinsi);
-        $kota = Kota::find($projectedit->kota);
-        $kecamatan = Kecamatan::find($projectedit->kecamatan);
-        $kodepos = KodePos::find($projectedit->kodepos);
-        $projectedit->provinsi = $provinsi->nama;
-        $projectedit->kota = $kota->nama;
-        $projectedit->kecamatan = $kecamatan->nama;
-        $projectedit->kodepos = $kodepos->kode;
-        
+        $projectedit = Revisi::with(['invoice.project.customer.kodepos.provinsi', 'invoice.project.customer.kodepos.kota', 'invoice.project.customer.kodepos.kecamatan'])->find($request->id)->invoice->project;
+
         $data = [
             'title'=>'Lihat Detail Revisi',
             'isInvoice'=>'active',
@@ -283,20 +265,19 @@ class InvoiceController extends Controller
 
     public function getDetailProject(Request $request){
         $project = Project::where('id',$request->project)->get();
-        $provinsi = Provinsi::where('id',$project[0]->provinsi)->get('nama');
-        $kota = Kota::where('id',$project[0]->kota)->get('nama');
-        $kecamatan = Kecamatan::where('id',$project[0]->kecamatan)->get('nama');
-        $kodepos = KodePos::where('id',$project[0]->kodepos)->get('kode');
-        $project[0]->provinsi = $provinsi[0]->nama;
-        $project[0]->kota = $kota[0]->nama;
-        $project[0]->kecamatan = $kecamatan[0]->nama;
-        $project[0]->kodepos = $kodepos[0]->kode;
         
         if(!$project->isEmpty()){
             $data = [
                 'status'=>200,
                 'project'=>$project
             ];
+            $customer = Project::find($request->project)->customer;
+            $data['project'][0]['provinsi'] = $customer->kodepos->provinsi->nama;
+            $data['project'][0]['kota'] = $customer->kodepos->kota->nama;
+            $data['project'][0]['kecamatan'] = $customer->kodepos->kecamatan->nama;
+            $data['project'][0]['kodepos'] = $customer->kodepos->kode;
+            $data['project'][0]['alamat'] = $customer->alamat;
+            $data['project'][0]['telp'] = $customer->telp;
         }else{
             $data = [
                 'status'=>500
@@ -311,25 +292,21 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($request->id);
         $project = Invoice::find($request->id)->project;
 
-        if ($invoice->exists()){
-            $deskripsi = Deskripsi::where('invoice_id', $request->id)->get();
-            $provinsi = Provinsi::where('id', $project->provinsi)->get();
-            $kota = Kota::where('id', $project->kota)->get();
-            $kecamatan = Kecamatan::where('id', $project->kecamatan)->get();
-            $kodepos = KodePos::where('id', $project->kodepos)->get();
-            $desa = Desa::where('id', $kodepos[0]->desa_id)->get();             
-
+        if ($invoice->exists()){       
             $data = [
                 'status'=>'200',
                 'invoice'=>$invoice,
                 'project'=>$project,
-                'deskripsi'=>$deskripsi,
+                'deskripsi'=>$invoice->deskripsi,
             ];
 
-           $data['project']['provinsi'] = $provinsi[0]->nama;
-           $data['project']['kota'] = $kota[0]->nama;
-           $data['project']['kecamatan'] = $kecamatan[0]->nama;
-           $data['project']['kodepos'] = $kodepos[0]->kode. ' - '.$desa[0]->nama;
+            $customer = $project->customer;
+            $data['project']['provinsi'] = $customer->kodepos->provinsi->nama;
+            $data['project']['kota'] = $customer->kodepos->kota->nama;
+            $data['project']['kecamatan'] = $customer->kodepos->kecamatan->nama;
+            $data['project']['kodepos'] = $customer->kodepos->kode;
+            $data['project']['alamat'] = $customer->alamat;
+            $data['project']['telp'] = $customer->telp;
          
         }else{
             $data = [
