@@ -44,6 +44,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('customer') }}" class="nav-link {{ $isCustomer ?? ''}}">
+              <i class="nav-icon fas fa-address-book"></i>
+              <p>
+                Customer
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ route('project') }}" class="nav-link {{ $isProject ?? ''}}">
               <i class="nav-icon fas fa-server"></i>
               <p>
@@ -70,7 +78,7 @@
           @can('admin')
           <li class="nav-item">
             <a href="{{ route('users') }}" class="nav-link {{ $isUsers ?? ''}}">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Users
               </p>

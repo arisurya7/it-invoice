@@ -27,6 +27,9 @@ Route::middleware(['auth', 'checkrole:Admin,Manager'])->group(function () {
     Route::match(['get', 'post'],'/', 'DashboardController@index')->name('dashboard')->middleware('auth');
     //Dashboard
     Route::get('/showstatus', 'DashboardController@showStatus')->name('showstatus');
+    //Customer
+    Route::get('/customer', 'CustomerController@index')->name('customer');
+    Route::get('/customer/show', 'CustomerController@show')->name('customer.show');
     //Project
     Route::get('/project', 'ProjectController@index')->name('project');
     Route::get('/project/show', 'ProjectController@show')->name('project.show');
@@ -44,6 +47,13 @@ Route::middleware(['auth', 'checkrole:Admin,Manager'])->group(function () {
 });
 
 Route::middleware(['checkrole:Admin'])->group(function () {
+    //Customer
+    Route::match(['get', 'post'], '/customer/add', 'CustomerController@add')->name('customer.add');
+    Route::match(['get', 'post'], '/customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
+    Route::post('/customer/delete', 'CustomerController@delete')->name('customer.delete');
+    Route::get('/customer/getkota', 'CustomerController@getKota')->name('customer.getkota');
+    Route::get('/customer/getkecamatan', 'CustomerController@getKecamatan')->name('customer.getkecamatan');
+    Route::get('/customer/getkodepos', 'CustomerController@getKodepos')->name('customer.getkodepos');
     //Project
     Route::match(['get', 'post'], '/project/add', 'ProjectController@add')->name('project.add');
     Route::match(['get', 'post'], '/project/edit/{id}', 'ProjectController@edit')->name('project.edit');

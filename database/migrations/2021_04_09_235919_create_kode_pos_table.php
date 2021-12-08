@@ -15,11 +15,10 @@ class CreateKodePosTable extends Migration
     {
         Schema::create('kode_pos', function (Blueprint $table) {
             $table->id();
-            $table->integer('provinsi_id');
-            $table->integer('kota_id');
-            $table->integer('kecamatan_id');
-            $table->integer('desa_id');
-            // $table->string('kode')->unique();
+            $table->foreignId('provinsi_id');
+            $table->foreignId('kota_id');
+            $table->foreignId('kecamatan_id');
+            $table->foreignId('desa_id');
             $table->string('kode');
             $table->timestamps();
         });

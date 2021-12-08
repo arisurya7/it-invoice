@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDesaTable extends Migration
+class CreateCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateDesaTable extends Migration
      */
     public function up()
     {
-        Schema::create('desas', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kecamatan_id');
-            $table->string('nama');
+            $table->string('nama_customer');
+            $table->string('telp');
+            $table->string('email');
+            $table->foreignId('id_kodepos');
+            $table->string('alamat');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateDesaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('desa');
+        Schema::dropIfExists('customers');
     }
 }
