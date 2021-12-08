@@ -58,7 +58,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Project</th>
-                                    <th>Nama Perusahaan</th>
+                                    <th>Nama Customer</th>
                                     <th>Tanggal Masuk</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -68,7 +68,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->nama_project }}</td>
-                                    <td>{{ $item->nama_perusahaan }}</td>
+                                    <td>{{ $item->customer->nama_customer }}</td>
                                     <td>{{ $item->tanggal }}</td>
                                     <td class="text-center">
                                         @can('admin')
@@ -116,21 +116,6 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="telp">Telp</label>
-                                            <input type="text" id="telp" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="perihal">Nama Perusahaan</label>
-                                            <input name="nama_perusahaan" id="nama_perusahaan" class="form-control"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
                                             <label for="tanggal">Tanggal</label>
                                             <input type="text" readonly="readonly" class="form-control" id="tanggal">
                                         </div>
@@ -139,37 +124,23 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="provinsi">Provinsi</label>
-                                            <input type="text" readonly="readonly" class="form-control" id="provinsi">
+                                            <label for="perihal">Nama Customer</label>
+                                            <input name="nama_custoner" id="nama_custoner" class="form-control"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="kota">Kota</label>
-                                            <input type="text" readonly="readonly" class="form-control" id="kota">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="kecamatan">Kecamatan</label>
-                                            <input type="text" readonly="readonly" class="form-control" id="kecamatan">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="kodepos">Kode Pos</label>
-                                            <input type="text" readonly="readonly" class="form-control" id="kodepos">
+                                            <label for="telp">Telp</label>
+                                            <input type="text" id="telp" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="alamat">Alamat</label>
-                                            <textarea name="alamat" id="alamat" cols="30" rows="3" readonly="readonly"
-                                                class="form-control"></textarea>
+                                            <label for="email">Email</label>
+                                            <input name="email" id="email" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -251,14 +222,10 @@
                 if (data.status == 200) {
                     data = data.data
                     $('#nama_project').val(data.nama_project)
-                    $('#nama_perusahaan').val(data.nama_perusahaan)
+                    $('#nama_custoner').val(data.nama_customer)
                     $('#telp').val(data.telp)
                     $('#tanggal').val(data.tanggal)
-                    $('#provinsi').val(data.provinsi)
-                    $('#kota').val(data.kota)
-                    $('#kecamatan').val(data.kecamatan)
-                    $('#kodepos').val(data.kodepos)
-                    $('#alamat').val(data.alamat)
+                    $('#email').val(data.email)
                     $('#modal-show').modal('show')
                 }
             }

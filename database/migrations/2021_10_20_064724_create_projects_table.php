@@ -16,14 +16,8 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('nama_project');
-            $table->string('nama_perusahaan');
-            $table->string('telp');
+            $table->foreignId('customer_id');
             $table->date('tanggal');
-            $table->string('provinsi');
-            $table->string('kota');
-            $table->string('kecamatan');
-            $table->string('kodepos');
-            $table->string('alamat');
             $table->timestamps();
         });
     }
