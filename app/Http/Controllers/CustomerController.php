@@ -206,47 +206,18 @@ class CustomerController extends Controller
     }
 
     public function delete(Request $request){
+        
+        $idProjects = Project::where('customer_id','=',$request->id_customer)->pluck('id')->toArray();
+        $idInvoices = Invoice::whereIn('project_id',$idProjects)->pluck('id')->toArray();
+        $idRevisis = Revisi::whereIn('invoice_id',$idInvoices)->pluck('id')->toArray();
+
         Customer::find($request->id_customer)->delete();
+        Project::where('customer_id',$request->id_customer)->delete();
+        Invoice::whereIn('project_id',$idProjects)->delete();
+        Revisi::whereIn('invoice_id',$idInvoices)->delete();
+        Deskripsi::whereIn('invoice_id',$idInvoices)->delete();
+        DetailRevisi::whereIn('revisi_id',$idRevisis)->delete();
+
         return redirect()->route('customer')->with(['success'=>'Data Customer berhasil dihapus!']);
-
-        // $idProjects = Project::where('id', $request->id_customer)->get('id');
-        // if(count($idProjects)==0){
-        //     Customer::find($request->id_customer)->delete();
-        //     return redirect()->route('customer')->with(['success'=>'Data Customer berhasil dihapus!']);
-        // }else{
-        //     $idInvoices = Array();
-        //     $invoices = Invoice::all();
-        //     foreach($idProjects as $project){ 
-        //         foreach($invoices as $invoice){
-        //             if($project->id == $invoice->project_id){
-        //                 array_push($idInvoices,$invoice->id);   
-        //             }                       
-        //         }
-        //         Project::where('id', $project->id)->delete();
-        //     }
-
-        //     if(count($idInvoices)>0){
-        //         $idRevisis = Array();
-        //         $revisis = Revisi::all();
-        //         foreach($idInvoices as $invoice){ 
-        //             foreach($revisis as $revisi){
-        //                 if($invoice->id == $revisi->invoice_id){
-        //                     array_push($idRevisis,$revisi->id);   
-        //                     Revisi::where('id',$revisi->id)->delete();
-        //                 }                       
-        //             }
-        //             Invoice::where('id', $invoice->id)->delete();
-        //             Deskripsi::where('invoice_id',$invoice->id)->delete();
-        //         }
-    
-        //         foreach($idRevisis as $d){
-        //             DetailRevisi::where('revisi_id', $d)->delete();
-        //         }
-        //     }
-           
-        //     Customer::find($request->id_customer)->delete();
-        //     return redirect()->route('customer')->with(['success'=>'Data Customer berhasil dihapus!']);
-        // }
-
     }
 }

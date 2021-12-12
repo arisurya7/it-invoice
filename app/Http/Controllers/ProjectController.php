@@ -117,32 +117,16 @@ class ProjectController extends Controller
     }
 
     public function delete(Request $request){
-        $idInvoices = Invoice::where('project_id', $request->id_project)->get('id');
-        if(count($idInvoices)==0){
-            Project::find($request->id_project)->delete();
-            return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
-        }else{
-            $idRevisis = Array();
-            $revisis = Revisi::all();
-            foreach($idInvoices as $invoice){ 
-                foreach($revisis as $revisi){
-                    if($invoice->id == $revisi->invoice_id){
-                        array_push($idRevisis,$revisi->id);   
-                        Revisi::where('id',$revisi->id)->delete();
-                    }                       
-                }
-                Invoice::where('id', $invoice->id)->delete();
-                Deskripsi::where('invoice_id',$invoice->id)->delete();
-            }
+        $idInvoices = Invoice::where('project_id', $request->id_project)->pluck('id')->toArray();
+        $idRevisis = Revisi::whereIn('invoice_id',$idInvoices)->pluck('id')->toArray();
 
-            foreach($idRevisis as $d){
-                DetailRevisi::where('revisi_id', $d)->delete();
-            }
+        Project::find($request->id_project)->delete();
+        Invoice::where('project_id', $request->id_project)->delete();
+        Revisi::whereIn('invoice_id',$idInvoices)->delete();
+        Deskripsi::whereIn('invoice_id',$idInvoices)->delete();
+        DetailRevisi::whereIn('revisi_id',$idRevisis)->delete();
 
-            Project::find($request->id_project)->delete();
-            return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
-        }
-
+        return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
     }
 
 }

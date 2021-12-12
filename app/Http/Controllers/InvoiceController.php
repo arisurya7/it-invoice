@@ -328,13 +328,11 @@ class InvoiceController extends Controller
     }
 
     public function delete(Request $request){
-        $data = Revisi::where('invoice_id', $request->id_invoice)->get('id');
+        $idRevisis = Revisi::where('invoice_id', $request->id_invoice)->pluck('id')->toArray();
         Revisi::where('invoice_id',$request->id_invoice)->delete();
         Invoice::find($request->id_invoice)->delete();
         Deskripsi::where('invoice_id',$request->id_invoice)->delete();
-        foreach($data as $d){
-            DetailRevisi::where('revisi_id',$d->id)->delete();
-        }
+        DetailRevisi::whereIn('revisiId',$idRevisis)->delete();
         return redirect()->route('invoice')->with(['success'=>'Data invoice berhasil dihapus!']);
 
     }
