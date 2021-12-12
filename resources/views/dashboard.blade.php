@@ -41,7 +41,7 @@
                   <div class="icon text-success">
                     <i class="fas fa-stamp"></i>
                   </div>
-                  <a href="javascript:void(0)" data-status="Final" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a>
+                  {{-- <a href="javascript:void(0)" data-status="Final" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a> --}}
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                 <div class="icon text-warning">
                   <i class="fas fa-pencil-ruler"></i>
                 </div>
-                <a href="javascript:void(0)" data-status="Draft" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a>
+                {{-- <a href="javascript:void(0)" data-status="Draft" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a> --}}
               </div>
             </div>
 
@@ -67,7 +67,7 @@
               <div class="icon text-danger">
                 <i class="fas fa-window-close"></i>
               </div>
-              <a href="javascript:void(0)" data-status="Cancel" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a>
+              {{-- <a href="javascript:void(0)" data-status="Cancel" class="small-box-footer btn-status">more info <i class="fas fa-info-circle text-info"></i></i></a> --}}
             </div>
           </div>
 

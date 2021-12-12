@@ -157,7 +157,7 @@
         }
 
 
-        .termin-row {
+        .termin-row, .bottom-border {
             background-color: #f8deb6;
         }
 
@@ -173,6 +173,7 @@
 
         .director-name {
             margin-top: 100px;
+            margin-left:50px;
             text-decoration-line: inherit;
         }
 
@@ -230,9 +231,19 @@
                     <td> : </td>
                     <td>{{ $invoice->nomor_invoice }}</td>
                 </tr>
+                <tr>
+                    <td class="date">Term</td>
+                    <td> : </td>
+                    <td>{{ $invoice->termin }}</td>
+                </tr>
+                <tr>
+                    <td class="date">Due Date</td>
+                    <td> : </td>
+                    <td>{{ $duedate }}</td>
+                </tr>
             </table>
         </div>
-        <p class="text-header">Jl. Unknown no.9, City, Province.</p>
+        <p class="text-header">Jl. Gatot Subroto no.9, Denpsar</p>
         <p class="text-header">info@itcompany.id</p>
         <div class="line-header"></div>
 
@@ -242,7 +253,7 @@
         <div class="regarding">
             <div class="left" id="regarding-left">
                 <p class="text-regarding">Bill to :</p>
-                <p class="text-regarding recipient">{{ $project->nama_perusahaan }}</p>
+                <p class="text-regarding recipient">{{ $project->customer->nama_customer }}</p>
             </div>
             <div class="right" id="regarding-right">
                 <p class="text-regarding">For :</p>
@@ -271,10 +282,6 @@
                     <tr class="bottom-border">
                         <td class="total">Total</td>
                         <td class="total-value">Rp {{ number_format($invoice->total,0, ",", ".")}},-</td>
-                    </tr>
-                    <tr class="termin-row">
-                        <td class="termin">{{ $invoice->termin }}</td>
-                        <td class="termin-value">Rp {{ number_format($invoice->total,0, ",", ".")}},-</td>
                     </tr>
                 </tfoot>
             </table>
@@ -316,8 +323,8 @@
         <div class="agreement" id="agreement-right">
             <img class="cap" src="" alt="">
             <img class="signature" src="" alt="">
-            <p class="text-agreement">City, {{ $print_date }}</p>
-            <p class="text-agreement director-name"><u>Name Your Company Director</u></p>
+            <p class="text-agreement">Denpasar, {{ $print_date }}</p>
+            <p class="text-agreement director-name"><u>I Kadek Ari Surya</u></p>
             <p class="text-agreement role">(Director)</p>
         </div>
     </main>

@@ -45,7 +45,7 @@
                     style="width:600px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;">
                         <td align="left" style="padding:10px 25px;background:#fff; display: flex; align-items: center;">
-                            <span style="font-weight: bold; padding-top: 10px;"> BIT Invoice </span>
+                            <span style="font-weight: bold; padding-top: 10px;"> IT Invoice </span>
                         </td>
                     </tr>
                     <tr>
@@ -72,7 +72,7 @@
                                                 Thank
                                                 you, </p>
                                             <p style="margin:0 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
-                                                BIT Invoice </p>
+                                                IT Invoice </p>
                                     </td>
                                 </tr>
                             </table>

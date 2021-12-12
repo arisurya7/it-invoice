@@ -320,10 +320,14 @@
                                 @enderror
                             </div>
                             <div class="col-4">
-                                <label for="penerima">Termin</label>
-                                <input type="text" class="form-control @error('termin') is-invalid @enderror"
-                                    placeholder="Masukan Termin" name="termin"
-                                    value="{{ old('termin')?old('termin'):($invoice->termin??'') }}">
+                                <label for="termin">Termin</label>
+                                <select name="termin" id="termin"
+                                    class="form-control select2  @error('termin') is-invalid @enderror">
+                                    <option value="">Pilih Termin</option>
+                                    <option value="Net 30" {{old('termin')=='Net 30'?'selected':(isset($invoice)?($invoice->termin=='Net 30'?'selected':''):'')}}>Net 30</option>
+                                    <option value="Net 60" {{old('termin')=='Net 60'?'selected':(isset($invoice)?($invoice->termin=='Net 60'?'selected':''):'')}}>Net 60</option>
+                                    <option value="Net 90" {{old('termin')=='Net 90'?'selected':(isset($invoice)?($invoice->termin=='Net 90'?'selected':''):'')}}>Net 90</option>
+                                </select>
                                 @error('termin')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

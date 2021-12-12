@@ -68,8 +68,8 @@
     <header>
         <div class="top-header">
             <h2 class="title-report">Report Invoice IT Company</h2>
-            <p>Company Addess</p>
-            <p>info@company.com</p>
+            <p>Jl. Gatot Subroto, No.1</p>
+            <p>info@itcompany.id</p>
         </div>
         <div class="header" id="left-header">
             <table>

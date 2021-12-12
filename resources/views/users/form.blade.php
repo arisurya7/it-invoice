@@ -129,6 +129,9 @@
                                         <option value="Manager"
                                             {{old('role')=='Manager'?'selected':(isset($user)?($user->role=='Manager'?'selected':''):'')}}>
                                             Manager</option>
+                                        <option value="Admin"
+                                            {{old('role')=='Admin'?'selected':(isset($user)?($user->role=='Admin'?'selected':''):'')}}>
+                                            Admin</option>
                                     </select>
                                     @error('role')
                                     <div class="invalid-feedback">{{ $message }}</div>

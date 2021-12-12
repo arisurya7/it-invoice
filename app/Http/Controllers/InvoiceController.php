@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Deskripsi;
-use App\Models\Provinsi;
-use App\Models\Kota;
-use App\Models\KodePos;
 use App\Models\Revisi;
 use App\Models\DetailRevisi;
-use App\Models\Kecamatan;
 use App\Models\Project;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -347,13 +342,28 @@ class InvoiceController extends Controller
     public function exportpdf($id){
         $invoice = Invoice::find($id);
         $project = Invoice::find($id)->project;
+
+        if($invoice->termin=='Net 30') $duedate = date('Y-m-d', strtotime('+30 days',strtotime($invoice->tanggal)));
+        else if ($invoice->termin=='Net 60')  $duedate = date('Y-m-d', strtotime('+60 days',strtotime($invoice->tanggal)));
+        else if ($invoice->termin=='Net 90')  $duedate = date('Y-m-d', strtotime('+90 days',strtotime($invoice->tanggal)));
+        $duedate = date('d/m/Y', strtotime($duedate));
         $print_date = date('Y-m-d');
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November','Desember'];
         $letter_date = date('d', strtotime($invoice->tanggal)).' '.$month[(int)date('m', strtotime($invoice->tanggal))-1].' '.date('Y', strtotime($invoice->tanggal));
         $print_date = date('d', strtotime($print_date)).' '.$month[(int)date('m', strtotime($print_date))-1].' '.date('Y', strtotime($print_date));
         $descriptions = Deskripsi::where('invoice_id', $id)->get();
         $invoice->tanggal = date("d/m/Y", strtotime($invoice->tanggal));
-        $pdf = PDF::loadView('invoice.pdf',['invoice'=>$invoice, 'project'=>$project, 'descriptions'=>$descriptions, 'letterdate'=>$letter_date, 'print_date'=>$print_date])->setpaper('A4','potrait');
+        $pdf = PDF::loadView(
+            'invoice.pdf',
+             [
+                 'invoice'=>$invoice, 
+                 'project'=>$project, 
+                 'descriptions'=>$descriptions, 
+                 'letterdate'=>$letter_date, 
+                 'print_date'=>$print_date,
+                 'duedate'=>$duedate
+            ]
+        )->setpaper('A4','potrait');
         return $pdf->stream('Invoice '.$invoice->nomor_invoice.'.pdf');
     }
             

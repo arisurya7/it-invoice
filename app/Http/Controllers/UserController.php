@@ -11,7 +11,7 @@ class UserController extends Controller
     //
     public function index(Request $request){
         
-        $users = User::where('role','!=','Admin')->get();
+        $users = User::all();
         $data = [
             'isUsers' => 'active',
             'users' => $users
