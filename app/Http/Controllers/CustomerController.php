@@ -206,18 +206,7 @@ class CustomerController extends Controller
     }
 
     public function delete(Request $request){
-        
-        $idProjects = Project::where('customer_id','=',$request->id_customer)->pluck('id')->toArray();
-        $idInvoices = Invoice::whereIn('project_id',$idProjects)->pluck('id')->toArray();
-        $idRevisis = Revisi::whereIn('invoice_id',$idInvoices)->pluck('id')->toArray();
-
         Customer::find($request->id_customer)->delete();
-        Project::where('customer_id',$request->id_customer)->delete();
-        Invoice::whereIn('project_id',$idProjects)->delete();
-        Revisi::whereIn('invoice_id',$idInvoices)->delete();
-        Deskripsi::whereIn('invoice_id',$idInvoices)->delete();
-        DetailRevisi::whereIn('revisi_id',$idRevisis)->delete();
-
         return redirect()->route('customer')->with(['success'=>'Data Customer berhasil dihapus!']);
     }
 }

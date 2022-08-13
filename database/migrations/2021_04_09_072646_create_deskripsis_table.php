@@ -15,7 +15,7 @@ class CreateDeskripsisTable extends Migration
     {
         Schema::create('deskripsis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id');
+            $table->foreignId('invoice_id')->constrained('invoices')->onUpdate('cascade')->onDelete('cascade');
             $table->text('deskripsi');
             $table->string('ammount');
             $table->timestamps();

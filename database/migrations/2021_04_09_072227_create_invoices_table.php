@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('nomor_invoice')->nullable();
-            $table->foreignId('project_id');
+            $table->foreignId('project_id')->unsigned();
             $table->text('perihal');
             $table->integer('total');
             $table->string('termin');

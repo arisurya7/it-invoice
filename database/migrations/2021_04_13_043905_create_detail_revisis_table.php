@@ -15,7 +15,7 @@ class CreateDetailRevisisTable extends Migration
     {
         Schema::create('detail_revisis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('revisi_id');
+            $table->foreignId('revisi_id')->constrained('revisis')->onUpdate('cascade')->onDelete('cascade');
             $table->text('deskripsi');
             $table->string('ammount');
             $table->timestamps();

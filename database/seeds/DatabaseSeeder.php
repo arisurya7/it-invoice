@@ -113,7 +113,7 @@ class DatabaseSeeder extends Seeder
             }
             $firstline = false;
         }   
-        fclose($csvKodePosFile);  
+        fclose($csvKodePosFile);
         
     }
 }

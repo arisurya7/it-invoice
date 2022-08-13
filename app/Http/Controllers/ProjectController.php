@@ -117,15 +117,7 @@ class ProjectController extends Controller
     }
 
     public function delete(Request $request){
-        $idInvoices = Invoice::where('project_id', $request->id_project)->pluck('id')->toArray();
-        $idRevisis = Revisi::whereIn('invoice_id',$idInvoices)->pluck('id')->toArray();
-
         Project::find($request->id_project)->delete();
-        Invoice::where('project_id', $request->id_project)->delete();
-        Revisi::whereIn('invoice_id',$idInvoices)->delete();
-        Deskripsi::whereIn('invoice_id',$idInvoices)->delete();
-        DetailRevisi::whereIn('revisi_id',$idRevisis)->delete();
-
         return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
     }
 
