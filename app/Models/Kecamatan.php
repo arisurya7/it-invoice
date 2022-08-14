@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kecamatan extends Model
 {
-    public function kodepos(){
-        return $this->hasMany('App\Models\KodePos');
-    }
 
     public function desa(){
         return $this->hasMany('App\Models\Desa');

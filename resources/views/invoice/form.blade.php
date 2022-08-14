@@ -116,7 +116,7 @@
                                     <label for="provinsi">Provinsi</label>
                                     <input type="text" name="provinsi" id="provinsi" class='form-control @error('
                                         provinsi') is-invalid @enderror'
-                                        value="{{ old('provinsi')?old('provinsi'):($projectedit->customer->kodepos->provinsi->nama??'') }}"
+                                        value="{{ old('provinsi')?old('provinsi'):($projectedit->customer->provinsi->nama??'') }}"
                                         readonly placeholder="Provinsi">
                                     @error('provinsi')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -128,7 +128,7 @@
                                     <label for="kota">Kota</label>
                                     <input type="text" name="kota" id="kota" class='form-control @error(' kota')
                                         is-invalid @enderror'
-                                        value="{{ old('kota')?old('kota'):($projectedit->customer->kodepos->kota->nama??'') }}"
+                                        value="{{ old('kota')?old('kota'):($projectedit->customer->kota->nama??'') }}"
                                         readonly placeholder="Kota">
                                     @error('kota')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -142,7 +142,7 @@
                                     <label for="kecamatan">Kecamatan</label>
                                     <input type="text" name="kecamatan" id="kecamatan" class='form-control @error('
                                         kecamatan') is-invalid @enderror'
-                                        value="{{ old('kecamatan')?old('kecamatan'):($projectedit->customer->kodepos->kecamatan->nama??'') }}"
+                                        value="{{ old('kecamatan')?old('kecamatan'):($projectedit->customer->kecamatan->nama??'') }}"
                                         readonly placeholder="Kecamatan">
                                     @error('kecamatan')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -154,7 +154,7 @@
                                     <label for="kodepos">Kode Pos</label>
                                     <input type="text" name="kodepos" id="kodepos" class='form-control @error('
                                         kodepos') is-invalid @enderror'
-                                        value="{{ old('kodepos')?old('kodepos'):($projectedit->customer->kodepos->kode??'') }}"
+                                        value="{{ old('kodepos')?old('kodepos'):($projectedit->customer->kodepos??'') }}"
                                         readonly placeholder="Kode Pos">
                                     @error('kodepos')
                                     <div class="invalid-feedback">{{ $message }}</div>

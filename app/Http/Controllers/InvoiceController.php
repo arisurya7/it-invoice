@@ -222,7 +222,7 @@ class InvoiceController extends Controller
         }
         
         $project = Project::orderBy('nama_project')->get();
-        $projectedit = Invoice::with(['project.customer.kodepos.provinsi', 'project.customer.kodepos.kota', 'project.customer.kodepos.kecamatan'])->find($id)->project;
+        $projectedit = Invoice::with(['project.customer.provinsi', 'project.customer.kota', 'project.customer.kecamatan'])->find($id)->project;
 
         $data = [
             'title'=>'Revisi Invoice',
@@ -246,7 +246,7 @@ class InvoiceController extends Controller
     {
         $revisi = Revisi::with(['detailrevisi','invoice.project.customer'])->find($request->id);
         $project = Project::orderBy('nama_project')->get();
-        $projectedit = Revisi::with(['invoice.project.customer.kodepos.provinsi', 'invoice.project.customer.kodepos.kota', 'invoice.project.customer.kodepos.kecamatan'])->find($request->id)->invoice->project;
+        $projectedit = Revisi::with(['invoice.project.customer.provinsi', 'invoice.project.customer.kota', 'invoice.project.customer.kecamatan'])->find($request->id)->invoice->project;
 
         $data = [
             'title'=>'Lihat Detail Revisi',
@@ -267,10 +267,10 @@ class InvoiceController extends Controller
                 'project'=>$project
             ];
             $customer = Project::find($request->project)->customer;
-            $data['project'][0]['provinsi'] = $customer->kodepos->provinsi->nama;
-            $data['project'][0]['kota'] = $customer->kodepos->kota->nama;
-            $data['project'][0]['kecamatan'] = $customer->kodepos->kecamatan->nama;
-            $data['project'][0]['kodepos'] = $customer->kodepos->kode;
+            $data['project'][0]['provinsi'] = $customer->provinsi->nama;
+            $data['project'][0]['kota'] = $customer->kota->nama;
+            $data['project'][0]['kecamatan'] = $customer->kecamatan->nama;
+            $data['project'][0]['kodepos'] = $customer->kodepos;
             $data['project'][0]['alamat'] = $customer->alamat;
             $data['project'][0]['telp'] = $customer->telp;
         }else{
@@ -296,10 +296,10 @@ class InvoiceController extends Controller
             ];
 
             $customer = $project->customer;
-            $data['project']['provinsi'] = $customer->kodepos->provinsi->nama;
-            $data['project']['kota'] = $customer->kodepos->kota->nama;
-            $data['project']['kecamatan'] = $customer->kodepos->kecamatan->nama;
-            $data['project']['kodepos'] = $customer->kodepos->kode;
+            $data['project']['provinsi'] = $customer->provinsi->nama;
+            $data['project']['kota'] = $customer->kota->nama;
+            $data['project']['kecamatan'] = $customer->kecamatan->nama;
+            $data['project']['kodepos'] = $customer->kodepos;
             $data['project']['alamat'] = $customer->alamat;
             $data['project']['telp'] = $customer->telp;
          
