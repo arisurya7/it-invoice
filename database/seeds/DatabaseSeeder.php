@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        Provinsi::truncate();
+        //Provinsi::truncate();
         $csvProvinsiFile = fopen(base_path("database\seeds\csv\province.csv"), "r");  
         $firstline = true;
         while (($data = fgetcsv($csvProvinsiFile, 2000, ",")) !== FALSE) {
@@ -84,36 +84,36 @@ class DatabaseSeeder extends Seeder
         }   
         fclose($csvKecamatanFile); 
 
-        $csvDesaFile = fopen(base_path("database\seeds\csv\subdistrict.csv"), "r");  
-        $firstline = true;
-        while (($data = fgetcsv($csvDesaFile, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
-                Desa::create([
-                    "id" => $data['0'],
-                    "nama" => $data['1'],
-                    "kecamatan_id" => $data['2']
-                ]);    
-            }
-            $firstline = false;
-        }   
-        fclose($csvDesaFile); 
+        // $csvDesaFile = fopen(base_path("database\seeds\csv\subdistrict.csv"), "r");  
+        // $firstline = true;
+        // while (($data = fgetcsv($csvDesaFile, 2000, ",")) !== FALSE) {
+        //     if (!$firstline) {
+        //         Desa::create([
+        //             "id" => $data['0'],
+        //             "nama" => $data['1'],
+        //             "kecamatan_id" => $data['2']
+        //         ]);    
+        //     }
+        //     $firstline = false;
+        // }   
+        // fclose($csvDesaFile); 
 
         
-        $csvKodePosFile = fopen(base_path("database\seeds\csv\postal_code.csv"), "r");  
-        $firstline = true;
-        while (($data = fgetcsv($csvKodePosFile, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
-                KodePos::create([
-                    "desa_id" => $data['1'],
-                    "kecamatan_id" => $data['2'],
-                    "kota_id" => $data['3'],
-                    "provinsi_id" => $data['4'],
-                    "kode" => $data['5']
-                ]);    
-            }
-            $firstline = false;
-        }   
-        fclose($csvKodePosFile);
+        // $csvKodePosFile = fopen(base_path("database\seeds\csv\postal_code.csv"), "r");  
+        // $firstline = true;
+        // while (($data = fgetcsv($csvKodePosFile, 2000, ",")) !== FALSE) {
+        //     if (!$firstline) {
+        //         KodePos::create([
+        //             "desa_id" => $data['1'],
+        //             "kecamatan_id" => $data['2'],
+        //             "kota_id" => $data['3'],
+        //             "provinsi_id" => $data['4'],
+        //             "kode" => $data['5']
+        //         ]);    
+        //     }
+        //     $firstline = false;
+        // }   
+        // fclose($csvKodePosFile);
         
     }
 }

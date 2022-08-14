@@ -14,6 +14,10 @@ class Kota extends Model
         return $this->hasMany('App\Models\Kecamatan');
     }
 
+    public function customer(){
+        return $this->hasMany('App\Models\Customer');
+    }
+
     public function provinsi(){
         return $this->belongsTo('App\Models\Provinsi');
     }

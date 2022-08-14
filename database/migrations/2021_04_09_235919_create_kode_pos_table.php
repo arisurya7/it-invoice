@@ -18,7 +18,6 @@ class CreateKodePosTable extends Migration
             $table->foreignId('provinsi_id');
             $table->foreignId('kota_id');
             $table->foreignId('kecamatan_id');
-            $table->foreignId('desa_id');
             $table->string('kode');
             $table->timestamps();
         });

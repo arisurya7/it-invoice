@@ -85,7 +85,7 @@
                                         <option value="">Pilih Provinsi</option>
                                         @foreach ($provinsi as $item)
                                         <option value="{{$item->id}}"
-                                            {{old('provinsi')==$item->id?'selected':(isset($customer)?($customer->kodepos->provinsi_id==$item->id?'selected':''):'')}}>
+                                            {{old('provinsi')==$item->id?'selected':(isset($customer)?($customer->id_provinsi==$item->id?'selected':''):'')}}>
                                             {{$item->nama}}</option>
                                         @endforeach
                                     </select>
@@ -103,7 +103,7 @@
                                         @if (isset($kota) && isset($customer))
                                         @foreach ($kota as $item)
                                         <option value="{{$item->id}}"
-                                            {{old('kota')==$item->id?'selected':($customer->kodepos->kota_id==$item->id?'selected':'')}}>
+                                            {{old('kota')==$item->id?'selected':($customer->id_kota==$item->id?'selected':'')}}>
                                             {{$item->nama}}</option>
                                         @endforeach
                                         @endif
@@ -124,7 +124,7 @@
                                         @if (isset($kecamatan) && isset($customer))
                                         @foreach ($kecamatan as $item)
                                         <option value="{{$item->id}}"
-                                            {{old('kecamatan')==$item->id?'selected':($customer->kodepos->kecamatan_id==$item->id?'selected':'')}}>
+                                            {{old('kecamatan')==$item->id?'selected':($customer->id_kecamatan==$item->id?'selected':'')}}>
                                             {{$item->nama}}</option>
                                         @endforeach
                                         @endif
@@ -136,18 +136,10 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="kodepos">Kode Pos</label>
-                                    <select name="kodepos" id="kodepos"
-                                        class="form-control select2  @error('kodepos') is-invalid @enderror">
-                                        <option value="">Pilih Kode Pos</option>
-                                        @if (isset($kodepos) && isset($customer))
-                                        @foreach ($kodepos as $item)
-                                        <option value="{{$item->id}}"
-                                            {{old('kodepos')==$item->id?'selected':($customer->kodepos->id==$item->id?'selected':'')}}>
-                                            {{$item->kode}} - {{$item->desa_id}}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
+                                    <label>Kode Pos</label>
+                                    <input type="text" class="form-control @error('kodepos') is-invalid @enderror"
+                                        placeholder="Masukkan Kode Post" name="kodepos" id="kodepos"
+                                        value="{{ old('kodepos')? old('kodepos'):($customer->kodepos ?? '') }}">
                                     @error('kodepos')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -196,8 +188,7 @@
                     provinsi: $(this).val()
                 },
                 success: function (data) {
-                    console.log(data)
-                    if (data.status == 200) {
+                    if (data.status==200) {
                         $('#kota').empty()
                         let opt = new Option('Pilih Kota', '', false, false)
                         $('#kota').append(opt).trigger('change')
@@ -229,32 +220,6 @@
                         $.each(data.kecamatan, function (key, item) {
                             opt = new Option(item.nama, item.id, false, false)
                             $('#kecamatan').append(opt)
-                        })
-                    }
-                }
-            })
-        }
-    })
-
-    $('#kecamatan').on('select2:select', function (e) {
-        console.log($(this).val())
-        if ($(this).val() != '') {
-            $.ajax({
-                url: "{{ route('customer.getkodepos') }}",
-                method: 'GET',
-                data: {
-                    kecamatan: $(this).val()
-                },
-                success: function (data) {
-                    console.log(data)
-                    if (data.status == 200) {
-                        $('#kodepos').empty()
-                        let opt = new Option('Pilih Kode Pos', '', false, false)
-                        $('#kodepos').append(opt).trigger('change')
-                        $.each(data.kodepos, function (key, item) {
-                            opt = new Option(item.kode + ' - ' + item.desa_id, item.id,
-                                false, false)
-                            $('#kodepos').append(opt)
                         })
                     }
                 }

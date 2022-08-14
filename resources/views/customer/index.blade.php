@@ -68,8 +68,8 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->nama_customer }}</td>
-                                    <td>{{ $item->kodepos->provinsi->nama }}</td>
-                                    <td>{{ $item->kodepos->kota->nama }}</td>
+                                    <td>{{ $item->provinsi->nama }}</td>
+                                    <td>{{ $item->kota->nama }}</td>
                                     <td class="text-center">
                                         @can('admin')
                                         <a href="{{ route('customer.edit', ['id'=>$item->id]) }}" title='Edit Customer'
@@ -247,9 +247,9 @@
                     $('#nama_customer').val(data.nama_customer)
                     $('#telp').val(data.telp)
                     $('#email').val(data.email)
-                    $('#provinsi').val(data.provinsi)
-                    $('#kota').val(data.kota)
-                    $('#kecamatan').val(data.kecamatan)
+                    $('#provinsi').val(data.provinsi.nama)
+                    $('#kota').val(data.kota.nama)
+                    $('#kecamatan').val(data.kecamatan.nama)
                     $('#kodepos').val(data.kodepos)
                     $('#alamat').val(data.alamat)
                     $('#modal-show').modal('show')

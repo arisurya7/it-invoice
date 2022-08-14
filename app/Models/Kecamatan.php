@@ -17,4 +17,8 @@ class Kecamatan extends Model
     public function kota(){
         return $this->belongsTo('App\Models\Kota');
     }
+
+    public function customer(){
+        return $this->hasMany('App\Models\Customer');
+    }
 }
