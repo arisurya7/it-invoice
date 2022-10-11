@@ -72,7 +72,7 @@
                                     <td>{{ $item->tanggal }}</td>
                                     <td class="text-center">
                                         @can('admin')
-                                        <a href="{{ route('project.edit', ['id'=>$item->id]) }}" title='Edit Project'
+                                        <a href="{{ route('project.edit', ['id'=> Crypt::encrypt($item->id)]) }}" title='Edit Project'
                                             class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
                                         <a href="javascript:void(0)" class="btn btn-info btn-sm btn-show"
                                             title='Show Project' data-id="{{ $item->id }}"><i

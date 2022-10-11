@@ -76,7 +76,7 @@
                                     <td>{{$item->revisiCount($item->id)}}</td>
                                     <td>
                                         @can('admin')
-                                            <a href="{{ route('invoice.edit', ['id'=>$item->id]) }}" title='Revisi invoice' class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>                                     
+                                            <a href="{{ route('invoice.edit', ['id'=> Crypt::encrypt($item->id)]) }}" title='Revisi invoice' class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>                                     
                                             <a href="javascript:void(0)" class="btn btn-info btn-sm btn-status" data-id="{{$item->id}}" title='Ganti status'><i class="fa fa-exclamation-circle"></i></a>
                                             <button class="btn btn-primary btn-sm btn-revisi" title='History revisi' data-id="{{$item->id}}" data-invoice="{{$item->nomor_invoice}}"><i class="fa fa-history"></i></button>
                                             <a href="{{ route('invoice.exportpdf', ['id'=>$item->id]) }}" class="btn btn-success btn-sm btn-pdf" target="_blank"title='Export PDF'><i class="fas fa-download"></i></a>

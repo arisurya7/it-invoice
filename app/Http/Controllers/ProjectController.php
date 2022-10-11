@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Revisi;
+use App\Models\Invoice;
+use App\Models\Project;
 use App\Models\Customer;
 use App\Models\Deskripsi;
 use App\Models\DetailRevisi;
-use App\Models\Invoice;
-use App\Models\Project;
-use App\Models\Revisi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $project = Project::with(['customer'])->get();
         $data = [
             'isProject' => 'active',
@@ -22,19 +25,20 @@ class ProjectController extends Controller
         return view('project.index', $data);
     }
 
-    public function add(Request $request){
+    public function add(Request $request)
+    {
 
-         if ($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $rules = [
-                'nama_project'=>'required',
-                'customer'=>'required',
-                'tanggal'=>'required',
+                'nama_project' => 'required',
+                'customer' => 'required',
+                'tanggal' => 'required',
             ];
             $errMessage = [
-                'nama_project.required'=>'Nama Project wajib diisi',
-                'customer.required'=>'Nama Customer wajib dipilih',
-                'telp.required'=>'Telp wajib diisi',
-                'tanggal.required'=>'Tanggal wajib diisi',
+                'nama_project.required' => 'Nama Project wajib diisi',
+                'customer.required' => 'Nama Customer wajib dipilih',
+                'telp.required' => 'Telp wajib diisi',
+                'tanggal.required' => 'Tanggal wajib diisi',
             ];
             $post = $request->validate($rules, $errMessage);
             // dd($post);
@@ -45,32 +49,33 @@ class ProjectController extends Controller
             $project->tanggal = $post['tanggal'];
             $project->save();
 
-            return redirect()->route('project')->with(['success'=>'Project berhasil ditambahkan']);
+            return redirect()->route('project')->with(['success' => 'Project berhasil ditambahkan']);
         }
 
         $customer = Customer::orderBy('nama_customer')->get();
         $data = [
-            'title'=>'Tambah Project',
-            'isProject'=>'active',
-            'customer'=>$customer
+            'title' => 'Tambah Project',
+            'isProject' => 'active',
+            'customer' => $customer
         ];
         return view('project.form', $data);
     }
 
     public function edit(Request $request, $id)
     {
+        $id = Crypt::decrypt($id);
         $project = Project::find($id);
         $customer = Customer::all();
-        if ($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $rules = [
-                'nama_project'=>'required',
-                'customer'=>'required',
-                'tanggal'=>'required',
+                'nama_project' => 'required',
+                'customer' => 'required',
+                'tanggal' => 'required',
             ];
             $errMessage = [
-                'nama_project.required'=>'Nama Project wajib diisi',
-                'customer.required'=>'Nama Customer wajib diisi',
-                'tanggal.required'=>'Tanggal wajib diisi',
+                'nama_project.required' => 'Nama Project wajib diisi',
+                'customer.required' => 'Nama Customer wajib diisi',
+                'tanggal.required' => 'Tanggal wajib diisi',
             ];
 
             $post = $request->validate($rules, $errMessage);
@@ -78,47 +83,46 @@ class ProjectController extends Controller
             $project->nama_project = $post['nama_project'];
             $project->customer_id = $post['customer'];
             $project->tanggal = $post['tanggal'];
-            
-            if ($project->isDirty()){
+
+            if ($project->isDirty()) {
                 $project->save();
-                return redirect()->route('project')->with(['success'=>'Update berhasil disimpan']);
+                return redirect()->route('project')->with(['success' => 'Update berhasil disimpan']);
             }
-            return redirect()->route('project')->with(['warning'=>'Tidak ada perubahan pada Project']);
+            return redirect()->route('project')->with(['warning' => 'Tidak ada perubahan pada Project']);
         }
 
         $data = [
-            'title'=>'Edit Project',
-            'isProject'=>'active',
-            'customer'=>$customer,
-            'project'=>$project
+            'title' => 'Edit Project',
+            'isProject' => 'active',
+            'customer' => $customer,
+            'project' => $project
         ];
         return view('project.form', $data);
     }
 
     public function show(Request $request)
-    { 
+    {
         $project = Project::find($request->id);
-        if ($project->exists()){           
+        if ($project->exists()) {
             $data = [
-                'status'=>'200',
-                'data'=>$project
+                'status' => '200',
+                'data' => $project
             ];
 
-           $data['data']['nama_customer'] = $project->customer->nama_customer;
-           $data['data']['telp'] = $project->customer->telp;
-           $data['data']['email'] = $project->customer->email;
-
-        }else{
+            $data['data']['nama_customer'] = $project->customer->nama_customer;
+            $data['data']['telp'] = $project->customer->telp;
+            $data['data']['email'] = $project->customer->email;
+        } else {
             $data = [
-                'status'=>'404'
+                'status' => '404'
             ];
         }
         return $data;
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         Project::find($request->id_project)->delete();
-        return redirect()->route('project')->with(['success'=>'Data Project berhasil dihapus!']);
+        return redirect()->route('project')->with(['success' => 'Data Project berhasil dihapus!']);
     }
-
 }

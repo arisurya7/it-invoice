@@ -72,7 +72,7 @@
                                     <td>{{ $item->kota->nama }}</td>
                                     <td class="text-center">
                                         @can('admin')
-                                        <a href="{{ route('customer.edit', ['id'=>$item->id]) }}" title='Edit Customer'
+                                        <a href="{{ route('customer.edit', ['id'=> Crypt::encrypt($item->id)]) }}" title='Edit Customer'
                                             class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
                                         <a href="javascript:void(0)" class="btn btn-info btn-sm btn-show"
                                             title='Show Customer' data-id="{{ $item->id }}"><i
