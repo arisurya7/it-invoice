@@ -12,6 +12,10 @@
             margin-bottom: 1.5cm;
         }
 
+        .table-report {
+            margin-top:100px;
+        }
+
         .table-report th,
         .table-report td {
             border: 1px solid black;
@@ -46,14 +50,14 @@
 
         #left-header {
             margin-left: 50px;
-            margin-top: 30px;
+            /* margin-top: 30px; */
             float: left;
         }
 
         #right-header {
             float: right;
             margin-right: 50px;
-            margin-bottom: 90px;
+            /* margin-bottom: 90px; */
         }
 
         thead {
