@@ -1,4 +1,4 @@
-# it-Invoice
+## it-Invoice
 
 it-Invoice is a website-based application that functions to manage invoices from companies that have products in the form of services such as project creation. This website was created using the [Laravel](https://laravel.com/) and [Bootstrap](https://getbootstrap.com/) frameworks.
 
