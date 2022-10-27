@@ -34,3 +34,17 @@ php artisan migrate:fresh --seed
 ```bash
 php artisan serve
 ```
+
+## FITUR
+- Login
+- Dashboard
+- Customer
+- Project
+- Report
+- Invoice
+- Users
+- Logout
+
+## INTERFACE
+![Group 7](https://user-images.githubusercontent.com/71582007/196856271-92fd935f-2dd0-4185-b3ea-500acdcc8fa8.png)
+
